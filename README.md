@@ -38,7 +38,7 @@ await client.createWish(
     request: WishRequestDt(
         title: 'My wish',
         description: 'My wish description', // or null
-        projectId: 'project-id', // Project ID from Wishfly admin
+        projectId: 0, // Project ID from Wishfly admin
     ),
 );
 ```
