@@ -45,14 +45,14 @@ await client.createWish(
 
 ## Contributing
 
-We welcome contributions to the Wishfly API Client. If you have a feature request or bug report, please open an issue on the [Github repository](https://github.com/Wishfly-dev/wishfly_api_client/issues).
+We welcome contributions to the Wishfly API Client. If you have a feature request or bug report, please open an issue on the [Github repository](https://github.com/Wishfly-dev/api_client/issues).
 
 If you're making a larger change, please open an issue first to discuss it before making a pull request.
 
 ## Help
 
-If you have any questions about using the Wishfly API Client, please post on the [Github repository](https://github.com/Wishfly-dev/wishfly_api_client/issues) and the maintainer will do their best to help you.
+If you have any questions about using the Wishfly API Client, please post on the [Github repository](https://github.com/Wishfly-dev/api_client/issues) and the maintainer will do their best to help you.
 
 ## License
 
-The Wishfly API Client is licensed under the [MIT License](https://github.com/Wishfly-dev/wishfly_api_client/blob/main/LICENSE).
+The Wishfly API Client is licensed under the [MIT License](https://github.com/Wishfly-dev/api_client/blob/dev/LICENSE).

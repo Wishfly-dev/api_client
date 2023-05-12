@@ -1,6 +1,7 @@
 name: wishfly_api_client
-description: A starting point for Dart libraries or applications.
+description: Flutter API client for Wishfly. Feature requests and voting without leaving your app.
 version: 0.1.0
+repository: https://github.com/Wishfly-dev/api_client
 
 environment:
   sdk: ^3.0.0
