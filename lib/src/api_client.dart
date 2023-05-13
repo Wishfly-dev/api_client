@@ -29,6 +29,8 @@ class WishflyApiClient {
   final http.Client _httpClient;
   static const unknownErrorMessage = 'An unknown error occurred.';
 
+  String get hostedUri => _baseUrl;
+
   /// API key used for authentication with the API.
   ///
   /// You can obtain API key from Wishfly dashboard.
@@ -43,11 +45,11 @@ class WishflyApiClient {
       headers: await _getRequestHeaders(),
     );
 
-    final body = response.jsonList();
-
     if (response.statusCode != HttpStatus.ok) {
       throw _parseErrorResponse(response.body, response.statusCode);
     }
+
+    final body = response.jsonList();
 
     return body.map((data) => ProjectResponseDto.fromJson(data)).toList();
   }
@@ -63,11 +65,11 @@ class WishflyApiClient {
       headers: await _getRequestHeaders(),
     );
 
-    final body = response.json();
-
     if (response.statusCode != HttpStatus.ok) {
       throw _parseErrorResponse(response.body, response.statusCode);
     }
+
+    final body = response.json();
 
     return ProjectResponseDto.fromJson(body);
   }

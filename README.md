@@ -35,7 +35,7 @@ Now you can use this instance to interact with the Wishfly API. For example, to 
 
 ```dart
 await client.createWish(
-    request: WishRequestDt(
+    request: WishRequestDto(
         title: 'My wish',
         description: 'My wish description', // or null
         projectId: 0, // Project ID from Wishfly admin
