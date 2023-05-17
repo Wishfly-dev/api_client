@@ -15,6 +15,7 @@ void main() {
   late WishflyApiClient apiClient;
 
   setUp(() {
+    // ignore: unused_local_variable
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
