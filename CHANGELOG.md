@@ -1,3 +1,6 @@
+## 0.3.0
+- feat: added project details 
+- feat(example): added example for project details
 ## 0.2.0
 - test: added tests for endpoints
 ## 0.1.0
