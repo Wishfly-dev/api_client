@@ -74,6 +74,26 @@ class WishflyApiClient {
     return ProjectResponseDto.fromJson(body);
   }
 
+  /// GET /api/v1/project/<id>/detail
+  /// Requests project detail information based in given id.
+  Future<ProjectDetailResponseDto> getProjectPlan({
+    required int id,
+  }) async {
+    final uri = Uri.parse('$_baseUrl/api/v1/project/$id/detail');
+    final response = await _httpClient.get(
+      uri,
+      headers: await _getRequestHeaders(),
+    );
+
+    if (response.statusCode != HttpStatus.ok) {
+      throw _parseErrorResponse(response.body, response.statusCode);
+    }
+
+    final body = response.json();
+
+    return ProjectDetailResponseDto.fromJson(body);
+  }
+
   /// POST /api/v1/wish
   /// Create wish in given project [WishRequestDto.projectId]
   Future<void> createWish({required WishRequestDto request}) async {
