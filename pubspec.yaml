@@ -1,6 +1,6 @@
 name: wishfly_api_client
 description: Flutter API client for Wishfly. Feature requests and voting without leaving your app.
-version: 0.3.0
+version: 0.3.1
 repository: https://github.com/Wishfly-dev/api_client
 
 environment:
