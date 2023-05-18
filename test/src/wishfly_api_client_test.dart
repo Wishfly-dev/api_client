@@ -16,7 +16,13 @@ void main() {
 
   setUp(() {
     // ignore: unused_local_variable
-    Map<String, String> headers = {'Content-Type': 'application/json', 'Accept': 'application/json', 'x-api-key': ''};
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'x-api-key': ''
+    };
+    
     httpClient = MockClient();
     apiClient = WishflyApiClient(
       apiKey: 'test_api_key',
