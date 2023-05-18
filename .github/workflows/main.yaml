@@ -1,4 +1,4 @@
-name: Analyzing project
+name: ci
 
 run-name: Analyze & Test
 on:
@@ -7,7 +7,7 @@ on:
     branches: [dev]
 
 jobs:
-  prepare:
+  analyze:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
