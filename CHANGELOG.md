@@ -1,3 +1,7 @@
+## 0.3.1
+- test: added project detail test
+- feat(example): changed example to create wish
+- fix: status code in create feature request
 ## 0.3.0
 - feat: added project details 
 - feat(example): added example for project details
