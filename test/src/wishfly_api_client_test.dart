@@ -16,14 +16,16 @@ void main() {
 
   setUp(() {
     // ignore: unused_local_variable
+
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'x-api-key': ''
     };
+    
     httpClient = MockClient();
     apiClient = WishflyApiClient(
-      apiKey: 'test_api_key_here',
+      apiKey: 'test_api_key',
       httpClient: httpClient,
     );
   });
@@ -59,6 +61,17 @@ void main() {
         }
       });
 
+      test('should fetch project details', () async {
+        final currentPlan = ProjectDetailResponseDto(currentPlan: "free");
+
+        when(httpClient.get(any, headers: anyNamed('headers')))
+            .thenAnswer((_) async => Response(jsonEncode(currentPlan), 200));
+
+        final projectsResponse = await apiClient.getProjectPlan(id: 0);
+        expect(projectsResponse, TypeMatcher<ProjectDetailResponseDto>());
+        expect(projectsResponse.currentPlan, "free");
+      });
+
       test('should fetch project based on given ID', () async {
         when(httpClient.get(any, headers: anyNamed('headers'))).thenAnswer(
           (_) async => Response(jsonEncode(projects.first.toJson()), 200),
@@ -78,9 +91,58 @@ void main() {
     });
 
     group('wishes', () {
+      test('should create a wish', () async {
+        final request = WishRequestDto(title: "", description: "", projectId: 0);
+        when(
+          httpClient.post(
+            any,
+            headers: anyNamed('headers'),
+            body: jsonEncode(request),
+          ),
+        ).thenAnswer((_) async => Response('', 201));
+
+        expect(
+          apiClient.createWish(request: request),
+          isA<Future<void>>(),
+        );
+      });
+
+      test('should throw [FreemiumAccountException] if status 409 is returned', () async {
+        final request = WishRequestDto(title: "", description: "", projectId: 0);
+
+        when(
+          httpClient.post(
+            any,
+            headers: anyNamed('headers'),
+            body: jsonEncode(request),
+          ),
+        ).thenAnswer((_) async => Response('{ "code": 409, "message": "" }', 409));
+
+        expect(
+          apiClient.createWish(request: request),
+          throwsA(isA<FreemiumAccountException>()),
+        );
+      });
+
+      test("should throw [WishflyException] if error response couldn't be parsed ", () async {
+        final request = WishRequestDto(title: "", description: "", projectId: 0);
+
+        when(
+          httpClient.post(
+            any,
+            headers: anyNamed('headers'),
+            body: jsonEncode(request),
+          ),
+        ).thenAnswer((_) async => Response('', 404));
+
+        expect(
+          apiClient.createWish(request: request),
+          throwsA(isA<WishflyException>()),
+        );
+      });
+
       test('should create a new vote', () async {
-        when(httpClient.post(any, headers: anyNamed('headers')))
-            .thenAnswer((_) async => Response('', 201));
+        when(httpClient.post(any, headers: anyNamed('headers'))).thenAnswer((_) async => Response('', 201));
 
         expect(
           apiClient.vote(wishId: 1),
@@ -89,8 +151,7 @@ void main() {
       });
 
       test('throws exception if the http request fails', () async {
-        when(httpClient.post(any, headers: anyNamed('headers')))
-            .thenAnswer((_) async => Response('', 400));
+        when(httpClient.post(any, headers: anyNamed('headers'))).thenAnswer((_) async => Response('', 400));
 
         expect(
           apiClient.vote(wishId: 1),
@@ -105,8 +166,7 @@ void main() {
       });
 
       test('should remove created vote', () async {
-        when(httpClient.delete(any, headers: anyNamed('headers')))
-            .thenAnswer((_) async => Response('', 200));
+        when(httpClient.delete(any, headers: anyNamed('headers'))).thenAnswer((_) async => Response('', 200));
 
         expect(
           apiClient.removeVote(wishId: 1),
@@ -115,8 +175,7 @@ void main() {
       });
 
       test('throws exception if the http request fails', () async {
-        when(httpClient.delete(any, headers: anyNamed('headers')))
-            .thenAnswer((_) async => Response('', 400));
+        when(httpClient.delete(any, headers: anyNamed('headers'))).thenAnswer((_) async => Response('', 400));
 
         expect(
           apiClient.removeVote(wishId: 1),

@@ -1,6 +1,7 @@
 # Wishfly API client
 
-[![pub package](https://img.shields.io/pub/v/wishfly.svg)](https://pub.dev/packages/wishfly_api_client)
+[![pub package](https://img.shields.io/pub/v/wishfly_api_client.svg)](https://pub.dev/packages/wishfly_api_client)
+[![ci](https://github.com/Wishfly-dev/api_client/actions/workflows/main.yaml/badge.svg)](https://github.com/Wishfly-dev/api_client/actions/workflows/main.yaml)
 [![Website](https://img.shields.io/badge/website-wishfly.dev-blue.svg)](https://wishfly.dev/)
 [![Twitter](https://img.shields.io/badge/Twitter-@Wishflydev-00c573.svg)](https://twitter.com/Wishflydev)
 
@@ -22,7 +23,7 @@ Then run `flutter pub get` to fetch the package.
 Before you can use the Wishfly API Client, you need to import it:
 
 ```dart
-import 'package:wishfly_api_client/client.dart';
+import 'package:wishfly_api_client/wishfly_api_client.dart';
 ```
 
 Then, create an instance of the client using your API key:
@@ -31,7 +32,13 @@ Then, create an instance of the client using your API key:
 final client = WishflyApiClient(apiKey: 'your-api-key');
 ```
 
-Now you can use this instance to interact with the Wishfly API. For example, to create a wish:
+Now you can use this instance to interact with the Wishfly API. For example, to get all projects:
+
+```dart
+await client.getProjects();
+```
+
+or creating feature request in project:
 
 ```dart
 await client.createWish(
@@ -42,6 +49,8 @@ await client.createWish(
     ),
 );
 ```
+
+
 
 ## Contributing
 
