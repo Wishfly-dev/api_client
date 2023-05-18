@@ -104,7 +104,7 @@ class WishflyApiClient {
       headers: await _getRequestHeaders(),
     );
 
-    if (response.statusCode != HttpStatus.ok) {
+    if (response.statusCode != HttpStatus.created) {
       throw _parseErrorResponse(response.body, response.statusCode);
     }
   }
@@ -154,6 +154,10 @@ class WishflyApiClient {
   ///
   /// [response] - HTTP response body in String
   /// [statusCode] - HTTP status code
+  ///
+  /// Status code [HttpStatus.conflict] meaning that you exceed your quota for creating feature requests
+  /// or projects, then [FreemiumAccountException] is thrown.
+  /// Otherwise, [WishflyException] is throw with [ErrorResponse.message] as error message.
   WishflyException _parseErrorResponse(String response, int statusCode) {
     final ErrorResponse error;
 
@@ -161,8 +165,13 @@ class WishflyApiClient {
       final body = json.decode(response) as Map<String, dynamic>;
       error = ErrorResponse.fromMap(body);
     } catch (_) {
-      throw WishflyException(unknownErrorMessage, statusCode);
+      return WishflyException(unknownErrorMessage, statusCode);
     }
+
+    if (statusCode == HttpStatus.conflict) {
+      return FreemiumAccountException(error.message);
+    }
+
     return WishflyException(error.message, statusCode);
   }
 }

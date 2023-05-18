@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 /// Representation of JSON parsing error
 class WishflyParsingJsonException implements Exception {
@@ -14,7 +15,7 @@ class ErrorResponse {
   });
 
   /// The unique error code.
-  final String code;
+  final int code;
 
   /// Human-readable error message.
   final String message;
@@ -28,13 +29,12 @@ class ErrorResponse {
 
   factory ErrorResponse.fromMap(Map<String, dynamic> map) {
     return ErrorResponse(
-      code: map['code'] ?? '',
+      code: map['code'] ?? HttpStatus.badRequest,
       message: map['message'] ?? '',
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory ErrorResponse.fromJson(String source) =>
-      ErrorResponse.fromMap(json.decode(source));
+  factory ErrorResponse.fromJson(String source) => ErrorResponse.fromMap(json.decode(source));
 }
