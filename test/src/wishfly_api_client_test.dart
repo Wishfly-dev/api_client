@@ -16,7 +16,11 @@ void main() {
 
   setUp(() {
     // ignore: unused_local_variable
-    Map<String, String> headers = {'Content-Type': 'application/json', 'Accept': 'application/json', 'x-api-key': ''};
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'x-api-key': ''
+    };
     httpClient = MockClient();
     apiClient = WishflyApiClient(
       apiKey: 'test_api_key',
@@ -86,7 +90,8 @@ void main() {
 
     group('wishes', () {
       test('should create a wish', () async {
-        final request = WishRequestDto(title: "", description: "", projectId: 0);
+        final request =
+            WishRequestDto(title: "", description: "", projectId: 0);
         when(
           httpClient.post(
             any,
@@ -101,8 +106,10 @@ void main() {
         );
       });
 
-      test('should throw [FreemiumAccountException] if status 409 is returned', () async {
-        final request = WishRequestDto(title: "", description: "", projectId: 0);
+      test('should throw [FreemiumAccountException] if status 409 is returned',
+          () async {
+        final request =
+            WishRequestDto(title: "", description: "", projectId: 0);
 
         when(
           httpClient.post(
@@ -110,7 +117,8 @@ void main() {
             headers: anyNamed('headers'),
             body: jsonEncode(request),
           ),
-        ).thenAnswer((_) async => Response('{ "code": 409, "message": "" }', 409));
+        ).thenAnswer(
+            (_) async => Response('{ "code": 409, "message": "" }', 409));
 
         expect(
           apiClient.createWish(request: request),
@@ -118,8 +126,11 @@ void main() {
         );
       });
 
-      test("should throw [WishflyException] if error response couldn't be parsed ", () async {
-        final request = WishRequestDto(title: "", description: "", projectId: 0);
+      test(
+          "should throw [WishflyException] if error response couldn't be parsed ",
+          () async {
+        final request =
+            WishRequestDto(title: "", description: "", projectId: 0);
 
         when(
           httpClient.post(
@@ -136,7 +147,8 @@ void main() {
       });
 
       test('should create a new vote', () async {
-        when(httpClient.post(any, headers: anyNamed('headers'))).thenAnswer((_) async => Response('', 201));
+        when(httpClient.post(any, headers: anyNamed('headers')))
+            .thenAnswer((_) async => Response('', 201));
 
         expect(
           apiClient.vote(wishId: 1),
@@ -145,7 +157,8 @@ void main() {
       });
 
       test('throws exception if the http request fails', () async {
-        when(httpClient.post(any, headers: anyNamed('headers'))).thenAnswer((_) async => Response('', 400));
+        when(httpClient.post(any, headers: anyNamed('headers')))
+            .thenAnswer((_) async => Response('', 400));
 
         expect(
           apiClient.vote(wishId: 1),
@@ -160,7 +173,8 @@ void main() {
       });
 
       test('should remove created vote', () async {
-        when(httpClient.delete(any, headers: anyNamed('headers'))).thenAnswer((_) async => Response('', 200));
+        when(httpClient.delete(any, headers: anyNamed('headers')))
+            .thenAnswer((_) async => Response('', 200));
 
         expect(
           apiClient.removeVote(wishId: 1),
@@ -169,7 +183,8 @@ void main() {
       });
 
       test('throws exception if the http request fails', () async {
-        when(httpClient.delete(any, headers: anyNamed('headers'))).thenAnswer((_) async => Response('', 400));
+        when(httpClient.delete(any, headers: anyNamed('headers')))
+            .thenAnswer((_) async => Response('', 400));
 
         expect(
           apiClient.removeVote(wishId: 1),

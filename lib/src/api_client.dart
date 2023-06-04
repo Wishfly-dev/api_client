@@ -54,6 +54,25 @@ class WishflyApiClient {
     return body.map((data) => ProjectResponseDto.fromJson(data)).toList();
   }
 
+  /// GET /api/v1/project/labels
+  /// Returns list of project labels.
+  Future<List<ProjectLabelResponseDto>> getProjectLabels(
+      {required int id}) async {
+    final uri = Uri.parse('$_baseUrl/api/v1/project/$id/labels');
+    final response = await _httpClient.get(
+      uri,
+      headers: await _getRequestHeaders(),
+    );
+
+    if (response.statusCode != HttpStatus.ok) {
+      throw _parseErrorResponse(response.body, response.statusCode);
+    }
+
+    final body = response.jsonList();
+
+    return body.map((data) => ProjectLabelResponseDto.fromJson(data)).toList();
+  }
+
   /// GET /api/v1/project/<id>
   /// Requests project based in given id.
   Future<ProjectResponseDto> getProject({
@@ -105,6 +124,21 @@ class WishflyApiClient {
     );
 
     if (response.statusCode != HttpStatus.created) {
+      throw _parseErrorResponse(response.body, response.statusCode);
+    }
+  }
+
+  /// PATCH /api/v1/wish
+  /// Update wish in given project [WishUpdateRequestDto.projectId]
+  Future<void> updateWish({required WishUpdateRequestDto request}) async {
+    final uri = Uri.parse('$_baseUrl/api/v1/wish');
+    final response = await _httpClient.patch(
+      uri,
+      body: json.encode(request.toJson()),
+      headers: await _getRequestHeaders(),
+    );
+
+    if (response.statusCode != HttpStatus.ok) {
       throw _parseErrorResponse(response.body, response.statusCode);
     }
   }
